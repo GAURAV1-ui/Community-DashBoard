@@ -1,10 +1,12 @@
-import express, { Express, Request, Response } from "express";
+import express, { Express} from "express";
 import dotenv from "dotenv";
 import cors from 'cors';
 import cookieParser from "cookie-parser"
 import connectToDatabase  from "./db/index";
 import userRoutes from './routes/user.route'
 import roleRoutes from './routes/role.route'
+import communityRoutes from "./routes/community.route";
+import memberRoutes from './routes/member.route';
 
 dotenv.config({
     path: './.env'
@@ -22,6 +24,8 @@ app.use(cookieParser())
 
 app.use(userRoutes);
 app.use(roleRoutes);
+app.use(communityRoutes);
+app.use(memberRoutes);
 
 connectToDatabase()
     .then(() => {

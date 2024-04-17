@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import { Snowflake } from "@theinternetfolks/snowflake";
 
-interface Member extends Document {
+export interface IMember extends Document {
   _id: string;
   community: string;
   user: string;
@@ -10,7 +10,7 @@ interface Member extends Document {
 
 const timestamp = new Date();
 
-const memberSchema = new Schema<Member>({
+const memberSchema = new Schema<IMember>({
     
     _id: {
         type:String,
@@ -37,6 +37,4 @@ const memberSchema = new Schema<Member>({
     _id:false,
     timestamps: true,
 });
-const Member = mongoose.model<Member>('Member', memberSchema);
-
-export default Member;
+export const Member = mongoose.model<IMember>('Member', memberSchema);

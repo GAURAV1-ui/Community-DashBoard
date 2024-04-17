@@ -1,18 +1,19 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { Snowflake } from "@theinternetfolks/snowflake";
 
-
-interface Community extends Document {
+export interface ICommunity extends Document {
   _id: string;
   name: string;
   slug: string;
   owner: string;
 }
 
-const communitySchema: Schema = new Schema<Community>({
+const timestamp = new Date();
+
+const communitySchema: Schema = new Schema<ICommunity>({
     _id:{
         type: String,
-        required: true,
-        unique: true,
+        default: Snowflake.generate({timestamp, shard_id: 12454}),
     },
   name: {
     type: String,
@@ -20,13 +21,11 @@ const communitySchema: Schema = new Schema<Community>({
   },
   slug: {
     type: String,
-    required: true,
     unique: true,
   },
   owner: {
     type: Schema.Types.String,
     ref: 'User',
-    required: true
   },
 
 },
@@ -35,6 +34,5 @@ const communitySchema: Schema = new Schema<Community>({
     timestamps:true,
 });
 
-const Community = mongoose.model<Community>('Cummunity', communitySchema);
+export const Community = mongoose.model<ICommunity>('Cummunity', communitySchema);
 
-export default Community;
