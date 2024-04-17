@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
-import {Community} from "../models/community.model";
 import {Role} from "../models/role.model";
-import { IMember, Member } from "../models/member.model";
+import { Member } from "../models/member.model";
 
 const createMember = async (req: Request, res: Response) => {
 
@@ -62,7 +61,6 @@ const removeMember = async(req:Request, res: Response) => {
     if (!userRole || (userRole.name !== "Community Admin" && userRole.name !== "Community Moderator")) {
         return res.status(403).json({ msg: "NOT_ALLOWED_ACCESS" });
     }
-
 
     const updatedMember = await Member.findOneAndUpdate(
         { _id: memberId},
