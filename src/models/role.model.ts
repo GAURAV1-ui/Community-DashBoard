@@ -1,30 +1,31 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { Snowflake } from "@theinternetfolks/snowflake";
 
-// Define an interface representing the document in MongoDB
-interface Role extends Document {
-  id: string;
+export interface IRole extends Document {
+  _id: string;
   name: string;
 }
 
-const roleSchema = new Schema<Role>({
-  id: {
+const timestamp = new Date();
+
+const roleSchema: Schema = new Schema<IRole>({
+  _id: {
     type: String,
     required: true,
-    unique: true ,
+    default: Snowflake.generate({timestamp, shard_id: 12444}),
   },
   name: {
     type: String,
     required: true,
-    unique: true, 
   }
 },
 {
-    timestamps:true,
     _id: false,
+    timestamps:true,
+
 }
 );
 
 
-const Role = mongoose.model<Role>('Role', roleSchema);
+export const Role = mongoose.model<IRole>('Role', roleSchema);
 
-export default Role;

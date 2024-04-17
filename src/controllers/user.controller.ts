@@ -1,16 +1,8 @@
 import { User,IUser } from "../models/user.model";
 import bcrypt from 'bcrypt';
-import { Snowflake } from "nodejs-snowflake";
 import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 
-
-const config = {
-    custom_epoch: Date.now(),
-    instance_id: 4000 
-};
-
-const uid = new Snowflake(config);
 
 
 const generateToken = async(userId:string, name:string, email:string) => {
@@ -43,10 +35,7 @@ const registerUser = async(req: Request, res:Response )=> {
     }
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const _id = uid.getUniqueID();
-
         const user: IUser= new User({
-            _id,
             name,
             email,
             password: hashedPassword

@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
+import { Snowflake } from "@theinternetfolks/snowflake";
 
 interface Member extends Document {
   _id: string;
@@ -7,12 +8,14 @@ interface Member extends Document {
   role: string;
 }
 
+const timestamp = new Date();
+
 const memberSchema = new Schema<Member>({
     
     _id: {
         type:String,
         required: true,
-        unique: true
+        default: Snowflake.generate({timestamp, shard_id: 12454}),
     },
   community: {
     type: Schema.Types.String,

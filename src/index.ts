@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from "cookie-parser"
 import connectToDatabase  from "./db/index";
 import userRoutes from './routes/user.route'
+import roleRoutes from './routes/role.route'
 
 dotenv.config({
     path: './.env'
@@ -20,6 +21,7 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 app.use(userRoutes);
+app.use(roleRoutes);
 
 connectToDatabase()
     .then(() => {

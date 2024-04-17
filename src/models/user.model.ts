@@ -1,4 +1,5 @@
 import mongoose,{Schema,Document} from "mongoose";
+import { Snowflake } from "@theinternetfolks/snowflake";
 
 export interface IUser extends Document {
     _id:string;
@@ -7,13 +8,15 @@ export interface IUser extends Document {
     password: string;
 }
 
+const timestamp = new Date();
+
 
 const userSchema:Schema = new Schema(
     {
         _id: {
             type:String,
             required: true,
-            unique: true
+            default: Snowflake.generate({timestamp, shard_id: 12444}),
         },
         name: {
             type: String,
